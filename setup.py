@@ -17,6 +17,13 @@ from setuptools import setup
 table_url = 'http://www.currency-iso.org/dam/downloads/table_a1.xml'
 
 
+# Override if ISO4217_DOWNLOAD_URL is set
+try:
+    table_url = os.environ['ISO4217_DOWNLOAD_URL']
+except KeyError:
+    pass
+
+
 def download_table(table_url, table_filename):
     response = urllib2.urlopen(table_url)
     try:

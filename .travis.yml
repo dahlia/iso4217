@@ -7,6 +7,8 @@ python:
 - 3.2
 - 3.3
 - 3.4
+env:
+- ISO4217_DOWNLOAD_URL=https://raw.githubusercontent.com/datasets/currency-codes/master/archive/table_a1.xml
 install:
 - python setup.py bdist_wheel
 - pip install dist/iso4217-*.whl flake8
