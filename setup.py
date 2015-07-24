@@ -81,8 +81,21 @@ def get_version():
     return version
 
 
+def readme():
+    try:
+        f = open('README.rst')
+    except IOError:
+        return
+    try:
+        return f.read()
+    finally:
+        f.close()
+
+
 setup(
     name='iso4217',
+    description='ISO 4217 currency data package for Python',
+    long_description=readme(),
     version=get_version(),
     author='Hong Minhee',
     author_email='hongminhee' '@' 'member.fsf.org',
