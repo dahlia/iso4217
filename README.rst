@@ -1,6 +1,9 @@
 ``iso4217``: Currency data package for Python
 =============================================
 
+.. image:: https://travis-ci.org/spoqa/iso4217.svg?branch=master
+   :target: https://travis-ci.org/spoqa/iso4217
+
 This Python package contains `ISO 4217`_ currency data, represented as
 enum_ module which was introduced in 3.4.  Note that this works on Python 2.5
 as well as 3.4, the latest version of Python, through enum34_ package.

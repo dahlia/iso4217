@@ -1,0 +1,15 @@
+language: python
+sudo: false
+python:
+- pypy
+- 2.6
+- 2.7
+- 3.2
+- 3.3
+- 3.4
+install:
+- python setup.py bdist_wheel
+- pip install dist/iso4217-*.whl flake8
+script:
+- flake8 .
+- pushd /tmp && python -c 'import iso4217' && popd
