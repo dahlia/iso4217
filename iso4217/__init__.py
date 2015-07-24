@@ -15,7 +15,7 @@ __all__ = ('Currency', '__published__', '__version__', '__version_info__',
            'raw_table', 'raw_xml')
 
 
-raw_xml = etree.fromstring(resource_string(__name__, 'table_a1.xml'))
+raw_xml = etree.fromstring(resource_string(__name__, 'table.xml'))
 __published__ = datetime.date(*map(int, raw_xml.attrib['Pblshd'].split('-')))
 __version_prefix__ = (1, 1)
 __version_info__ = (__version_prefix__ +

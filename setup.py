@@ -15,7 +15,7 @@ import warnings
 from setuptools import setup
 
 
-table_url = 'http://www.currency-iso.org/dam/downloads/table_a1.xml'
+table_url = 'http://www.currency-iso.org/dam/downloads/lists/list_one.xml'
 
 
 # Override if ISO4217_DOWNLOAD_URL is set
@@ -38,7 +38,7 @@ def download_table(table_url, table_filename):
 
 
 table_filename = os.path.join(os.path.dirname(__file__),
-                              'iso4217', 'table_a1.xml')
+                              'iso4217', 'table.xml')
 download_flag = os.environ.get('ISO4217_DOWNLOAD')
 download = (
     (
@@ -121,7 +121,7 @@ setup(
     author_email='hongminhee' '@' 'member.fsf.org',
     license='Public Domain',
     packages=['iso4217'],
-    package_data={'iso4217': ['table_a1.xml']},
+    package_data={'iso4217': ['table.xml']},
     install_requires=get_install_requires(),
     extras_require=dict(get_extras_require()),
     keywords='internationalization i18n currency iso4217',
