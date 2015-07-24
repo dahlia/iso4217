@@ -10,6 +10,7 @@ try:
     from xml.etree import cElementTree as etree
 except ImportError:
     from xml.etree import ElementTree as etree
+import warnings
 
 from setuptools import setup
 
@@ -86,7 +87,18 @@ def get_version():
         raise ValueError('could not find __version_prefix__')
     try:
         raw_xml = etree.parse(table_filename)
+    except etree.ParseError as e:
+        try:
+            xml = open(table_filename)
+        except IOError:
+            xml_data = '(file does not exist: {})'.format(table_filename)
+        else:
+            xml_data = xml.read()
+            xml.close()
+        warnings.warn('{}\n{}'.format(e, xml_data))
+        return version
     except IOError:
+        warnings.warn(str(e))
         return version
     version += '.' + raw_xml.getroot().attrib['Pblshd'].replace('-', '')
     return version
