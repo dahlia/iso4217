@@ -27,7 +27,11 @@ except KeyError:
 def download_table(table_url, table_filename):
     response = urllib2.urlopen(table_url)
     try:
-        f = open(table_filename, 'w')
+        if isinstance(response.read(0), bytes):
+            binary = 'b'
+        else:
+            binary = ''
+        f = open(table_filename, 'w' + binary)
         try:
             f.write(response.read())
         finally:
