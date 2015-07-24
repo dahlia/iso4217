@@ -1,0 +1,8 @@
+*.egg
+*.egg-info
+*.pyc
+*.xml
+.*.swp
+.*.swo
+.tox
+__pycache__
