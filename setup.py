@@ -116,6 +116,7 @@ setup(
     description='ISO 4217 currency data package for Python',
     long_description=readme(),
     version=get_version(),
+    url='https://github.com/spoqa/iso4217',
     author='Hong Minhee',
     author_email='hongminhee' '@' 'member.fsf.org',
     license='Public Domain',
