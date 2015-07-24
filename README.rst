@@ -1,6 +1,8 @@
 ``iso4217``: Currency data package for Python
 =============================================
 
+.. image:: https://badge.fury.io/py/iso4217.svg?
+   :target: https://pypi.python.org/pypi/iso4217
 .. image:: https://travis-ci.org/spoqa/iso4217.svg?branch=master
    :target: https://travis-ci.org/spoqa/iso4217
 
