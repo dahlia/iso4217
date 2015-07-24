@@ -6,3 +6,5 @@
 .*.swo
 .tox
 __pycache__
+build
+dist
