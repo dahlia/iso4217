@@ -17,7 +17,7 @@ __all__ = ('Currency', '__published__', '__version__', '__version_info__',
 
 raw_xml = etree.fromstring(resource_string(__name__, 'table.xml'))
 __published__ = datetime.date(*map(int, raw_xml.attrib['Pblshd'].split('-')))
-__version_prefix__ = (1, 1)
+__version_prefix__ = (1, 2)
 __version_info__ = (__version_prefix__ +
                     (int(__published__.strftime('%Y%m%d')),))
 __version__ = '.'.join(map(str, __version_info__))
@@ -25,10 +25,10 @@ __version__ = '.'.join(map(str, __version_info__))
 
 def parse_table(tree):
     """Parse an ISO 4217 XML table data and then return raw table as
-    a list of dictionaries.
+    a dictionary.
 
     """
-    table = []
+    table = {}
     for node in tree.findall('CcyTbl/CcyNtry'):
         ctry_nm = node.find('CtryNm')
         if ctry_nm is not None:
@@ -45,17 +45,22 @@ def parse_table(tree):
         ccy_mnr_unts = node.find('CcyMnrUnts')
         if ccy_mnr_unts is not None:
             ccy_mnr_unts = ccy_mnr_unts.text.strip()
-        table.append({
-            'CtryNm': ctry_nm,
-            'CcyNm': ccy_nm,
-            'Ccy': ccy,
-            'CcyNbr': ccy_nbr,
-            'CcyMnrUnts': ccy_mnr_unts,
-        })
+        try:
+            ccy_dict = table[ccy]
+        except KeyError:
+            table[ccy] = {
+                'CtryNm': set([ctry_nm]),
+                'CcyNm': ccy_nm,
+                'Ccy': ccy,
+                'CcyNbr': ccy_nbr,
+                'CcyMnrUnts': ccy_mnr_unts,
+            }
+        else:
+            ccy_dict['CtryNm'].add(ctry_nm)
     return table
 
 
-#: (:class:`collections.abc.Sequence`) The raw table list.
+#: (:class:`collections.abc.Mapping`) The raw table.
 raw_table = parse_table(raw_xml)
 
 
@@ -69,30 +74,17 @@ def update_enum_dict(locals_, taw_table):
 
     """
     enumerants = {}
-    for _ccy_ntry in raw_table:
+    for code, _ccy_ntry in raw_table.items():
         if _ccy_ntry['CcyNbr'] is None:
             continue
         if not _ccy_ntry.get('CcyMnrUnts', '').isdigit():
             continue
-        code = _ccy_ntry['Ccy']
         lcode = code.lower()
         if lcode in ('mro',):
             lcode += '_'
-        if lcode in enumerants:
-            enumerants[lcode][3].add(_ccy_ntry['CtryNm'])
-            continue
-        enumerants[lcode] = (
-            code,
-            int(_ccy_ntry['CcyNbr']),
-            _ccy_ntry['CcyNm'],
-            set([_ccy_ntry['CtryNm']]),
-            int(_ccy_ntry['CcyMnrUnts']),
-        )
+        enumerants[lcode] = code
     for code, enumerant in enumerants.items():
-        locals_[code] = tuple(
-            frozenset(field) if isinstance(field, set) else field
-            for field in enumerant
-        )
+        locals_[code] = enumerant
 
 
 class Currency(enum.Enum):
@@ -104,9 +96,39 @@ class Currency(enum.Enum):
 
     update_enum_dict(locals(), raw_table)
 
-    def __init__(self, code, number, currency_name, country_names, exponent):
-        self.code = code
-        self.number = number
-        self.currency_name = currency_name
-        self.country_names = country_names
-        self.exponent = exponent
+    @property
+    def code(self):
+        """(:class:`str`) The currency code which consist of 3 uppercase
+        characters e.g. ``'USD'``, ``'EUR'``.
+
+        """
+        return self.value
+
+    @property
+    def number(self):
+        """(:class:`int`) The currency number."""
+        return int(raw_table[self.value]['CcyNbr'])
+
+    @property
+    def currency_name(self):
+        """(:class:`str`) The human-readable name of the currency e.g.
+        ``'US Dollar'``, ``'Euro'``.
+
+        """
+        return raw_table[self.value]['CcyNm']
+
+    @property
+    def country_names(self):
+        return frozenset(raw_table[self.value]['CtryNm'])
+
+    @property
+    def exponent(self):
+        """(:class:`int`) The treatment of minor currency unit, in exponent
+        where base is 10.  For example, a U.S. dollar is 100 cents,
+        so ``Currency.usd.exponent == 2``.
+
+        There are also currencies that have no minor ucrrency unit.
+        These are represented as 0.
+
+        """
+        return int(raw_table[self.value]['CcyMnrUnts'])
