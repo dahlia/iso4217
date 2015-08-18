@@ -64,7 +64,7 @@ def parse_table(tree):
 raw_table = parse_table(raw_xml)
 
 
-def update_enum_dict(locals_, taw_table):
+def update_enum_dict(locals_, raw_table):
     """Since :mod:`enum` module's class-level locals dictionary is
     not an ordinary Python :class:`dict`, so leaking local variables
     make unexpected behaviors.
