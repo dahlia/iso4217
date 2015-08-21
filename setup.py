@@ -126,7 +126,7 @@ setup(
     extras_require=dict(get_extras_require()),
     keywords='internationalization i18n currency iso4217',
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: Public Domain',
         'Operating System :: OS Independent',
