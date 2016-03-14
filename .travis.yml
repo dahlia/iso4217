@@ -4,9 +4,11 @@ python:
 - pypy
 - 2.6
 - 2.7
+- pypy3
 - 3.2
 - 3.3
 - 3.4
+- 3.5
 install:
 - python setup.py bdist_wheel
 - pip install dist/iso4217-*.whl flake8
