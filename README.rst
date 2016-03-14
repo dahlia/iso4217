@@ -11,16 +11,24 @@ enum_ module which was introduced in 3.4.  Note that this works on Python 2.5
 as well as 3.4, the latest version of Python, through enum34_ package.
 
 >>> from iso4217 import Currency
+>>> Currency.usd
+<Currency.usd: 'USD'>
 >>> Currency.usd.code
 'USD'
 >>> Currency.usd.currency_name
 'US Dollar'
 >>> Currency.usd.exponent  # USD has cents
 2
+>>> Currency.jpy
+<Currency.jpy: 'JPY'>
 >>> Currency.jpy.currency_name
 'Yen'
 >>> Currency.jpy.exponent  # JPY has no minor units
 0
+>>> Currency('KRW')  # Get by the code string
+<Currency.krw: 'KRW'>
+>>> Currency.krw is Currency('KRW')
+True
 
 Written by `Hong Minhee`_.  Distributed under Public Domain.
 
