@@ -93,7 +93,7 @@ def get_version():
             xml.close()
         warnings.warn('{}\n{}'.format(e, xml_data))
         return version
-    except IOError:
+    except IOError as e:
         warnings.warn(str(e))
         return version
     version += '.' + raw_xml.getroot().attrib['Pblshd'].replace('-', '')
