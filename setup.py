@@ -118,7 +118,7 @@ setup(
     version=get_version(),
     url='https://github.com/spoqa/iso4217',
     author='Hong Minhee',
-    author_email='hongminhee' '@' 'member.fsf.org',
+    author_email='\x68\x6f\x6e\x67.minhee' '@' '\x67\x6d\x61\x69\x6c.com',
     license='Public Domain',
     packages=['iso4217'],
     package_data={'iso4217': ['table.xml']},
