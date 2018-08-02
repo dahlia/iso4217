@@ -3,6 +3,8 @@ sudo: false
 env:
 - FAKEINV_DIR=/tmp/fakeinv
 python:
+- 3.7
+- 3.6
 - 3.5
 - 3.4
 - 3.3
