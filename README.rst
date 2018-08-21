@@ -3,8 +3,8 @@
 
 .. image:: https://badge.fury.io/py/iso4217.svg?
    :target: https://pypi.python.org/pypi/iso4217
-.. image:: https://travis-ci.org/spoqa/iso4217.svg?branch=master
-   :target: https://travis-ci.org/spoqa/iso4217
+.. image:: https://travis-ci.org/dahlia/iso4217.svg?branch=master
+   :target: https://travis-ci.org/dahlia/iso4217
 
 This Python package contains `ISO 4217`_ currency data, represented as
 enum_ module which was introduced in 3.4.  Note that this works on Python 2.5
