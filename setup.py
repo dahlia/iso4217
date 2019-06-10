@@ -51,7 +51,7 @@ if download:
 
 
 def get_install_requires():
-    install_requires = ['setuptools']
+    install_requires = []
     if 'bdist_wheel' not in sys.argv and sys.version_info < (3, 4):
         install_requires.append('enum34')
     return install_requires
