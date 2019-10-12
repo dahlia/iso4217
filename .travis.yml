@@ -3,13 +3,11 @@ sudo: false
 env:
 - FAKEINV_DIR=/tmp/fakeinv
 python:
+- 3.7
 - 3.6
 - 3.5
 - 3.4
-- 3.3
-- 3.2
 - 2.7
-- 2.6
 - pypy3
 - pypy
 matrix:
@@ -21,9 +19,7 @@ install:
 - python setup.py bdist_wheel
 - pip install dist/iso4217-*.whl flake8
 script:
-- if [[ "$TRAVIS_PYTHON_VERSION" != "2.6" && "$TRAVIS_PYTHON_VERSION" != "3.2" ]]; then
-    flake8 .;
-  fi
+- flake8 .
 - pushd /tmp && python -m iso4217.test && popd
 after_success:
 - export GIT_AUTHOR_NAME="$(git log --pretty=format:'%an' -n1)"
@@ -41,7 +37,7 @@ after_success:
 - git -C $FAKEINV_DIR commit -m "Fake objects.inv  $TRAVIS_COMMIT"
 - openssl aes-256-cbc -K $encrypted_5187b045a9f7_key -iv $encrypted_5187b045a9f7_iv -in deploy_rsa.enc -out deploy_rsa -d
 - chmod 400 deploy_rsa
-- if [[ "$TRAVIS_PYTHON_VERSION" = "3.5" ]]; then
+- if [[ "$TRAVIS_PYTHON_VERSION" = "3.7" ]]; then
     ssh-agent sh -c "ssh-add deploy_rsa && git -C $FAKEINV_DIR push -f origin gh-pages";
   else
     echo "$TRAVIS_PYTHON_VERSION";

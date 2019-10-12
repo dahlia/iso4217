@@ -57,12 +57,6 @@ def get_install_requires():
     return install_requires
 
 
-def get_extras_require():
-    """Generate conditional requirements with environ marker."""
-    for pyversion in '2.5', '2.6', '2.7', '3.2', '3.3':
-        yield ':python_version==' + repr(pyversion), ['enum34']
-
-
 def get_version():
     module_path = os.path.join(os.path.dirname(__file__),
                                'iso4217', '__init__.py')
@@ -122,19 +116,15 @@ setup(
     license='Public Domain',
     packages=['iso4217'],
     package_data={'iso4217': ['table.xml']},
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     install_requires=get_install_requires(),
-    extras_require=dict(get_extras_require()),
     keywords='internationalization i18n currency iso4217',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: Public Domain',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.5',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
