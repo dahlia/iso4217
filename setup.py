@@ -42,7 +42,7 @@ table_filename = os.path.join(os.path.dirname(__file__),
 download_flag = os.environ.get('ISO4217_DOWNLOAD')
 download = (
     (
-        download_flag not in('0', 'false', 'no') and
+        download_flag not in ('0', 'false', 'no') and
         not os.path.isfile(table_filename)
     ) or download_flag in ('1', 'true', 'yes')
 )

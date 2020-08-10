@@ -3,6 +3,7 @@ sudo: false
 env:
 - FAKEINV_DIR=/tmp/fakeinv
 python:
+- 3.8
 - 3.7
 - 3.6
 - 3.5
@@ -10,11 +11,6 @@ python:
 - 2.7
 - pypy3
 - pypy
-matrix:
-  include:
-  - python: 3.7
-    dist: xenial
-    sudo: true
 install:
 - python setup.py bdist_wheel
 - pip install dist/iso4217-*.whl flake8

@@ -3,7 +3,7 @@
 
 .. image:: https://badge.fury.io/py/iso4217.svg?
    :target: https://pypi.python.org/pypi/iso4217
-.. image:: https://travis-ci.org/dahlia/iso4217.svg?branch=master
+.. image:: https://travis-ci.org/dahlia/iso4217.svg?branch=main
    :target: https://travis-ci.org/dahlia/iso4217
 
 This Python package contains `ISO 4217`_ currency data, represented as
