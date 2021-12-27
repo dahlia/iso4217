@@ -4,6 +4,7 @@
 """
 import datetime
 import enum
+import locale
 try:
     from xml.etree import cElementTree as etree
 except ImportError:
@@ -15,8 +16,18 @@ __all__ = ('Currency', '__published__', '__version__', '__version_info__',
            'raw_table', 'raw_xml')
 
 
+def parse_published(pblshd):
+    if '-' in pblshd and ',' not in pblshd:
+        return datetime.date(*map(int, raw_xml.attrib['Pblshd'].split('-')))
+    lc_time, _ = locale.getlocale(locale.LC_TIME)
+    locale.setlocale(locale.LC_TIME, 'C')
+    published = datetime.datetime.strptime(pblshd, "%B %d, %Y").date()
+    locale.setlocale(locale.LC_TIME, lc_time)
+    return published
+
+
 raw_xml = etree.fromstring(resource_string(__name__, 'table.xml'))
-__published__ = datetime.date(*map(int, raw_xml.attrib['Pblshd'].split('-')))
+__published__ = parse_published(raw_xml.attrib['Pblshd'])
 __version_prefix__ = (1, 6)
 __version_info__ = (__version_prefix__ +
                     (int(__published__.strftime('%Y%m%d')),))

@@ -1,7 +1,9 @@
 import ast
+import locale
 import os
 import os.path
 import sys
+import time
 try:
     import urllib2
 except ImportError:
@@ -90,7 +92,16 @@ def get_version():
     except IOError as e:
         warnings.warn(str(e))
         return version
-    version += '.' + raw_xml.getroot().attrib['Pblshd'].replace('-', '')
+    pblshd = raw_xml.getroot().attrib['Pblshd']
+    if '-' in pblshd and ',' not in pblshd:
+        pblshd_number = pblshd.replace('-', '')
+    else:
+        lc_time, _ = locale.getlocale(locale.LC_TIME)
+        locale.setlocale(locale.LC_TIME, 'C')
+        pblshd_number = \
+            time.strftime("%Y%m%d", time.strptime(pblshd, "%B %d, %Y"))
+        locale.setlocale(locale.LC_TIME, lc_time)
+    version += '.' + pblshd_number
     return version
 
 
