@@ -2,7 +2,20 @@ name: main
 on: [push, pull_request]
 
 jobs:
-  main:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: pip3 install flake8 wheel
+    - run: python3 setup.py bdist_wheel
+    - run: flake8 .
+    - uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist
+
+  test:
+    needs: [build]
     strategy:
       matrix:
         runtime:
@@ -23,28 +36,29 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.runtime.os }}
     steps:
-    - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.runtime.python-version }}
-    - run: pip install wheel flake8
-    - run: python setup.py bdist_wheel
+    - uses: actions/download-artifact@v2
+      with:
+        name: dist
+        path: dist
     - run: pip install dist/iso4217-*.whl
     - run: |
         set -e
         pushd /tmp
         python -m iso4217.test
         popd
-        flake8 .
 
   fakeinv:
     if: "github.event_name == 'push'"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: pip3 install wheel sphinx-fakeinv
-    - run: python3 setup.py bdist_wheel
-    - run: pip3 install dist/iso4217-*.whl
+    - uses: actions/download-artifact@v2
+      with:
+        name: dist
+        path: dist
+    - run: pip3 install dist/iso4217-*.whl sphinx-fakeinv
     - run: mkdir -p /tmp/fakeinv/
     - run: sphinx-fakeinv iso4217 > /tmp/fakeinv/objects.inv
     - run: touch /tmp/fakeinv/.nojekyll

@@ -2,7 +2,6 @@ import ast
 import locale
 import os
 import os.path
-import sys
 import time
 try:
     import urllib2
@@ -52,13 +51,6 @@ if download:
     download_table(table_url, table_filename)
 
 
-def get_install_requires():
-    install_requires = ['setuptools']
-    if 'bdist_wheel' not in sys.argv and sys.version_info < (3, 4):
-        install_requires.append('enum34')
-    return install_requires
-
-
 def get_version():
     module_path = os.path.join(os.path.dirname(__file__),
                                'iso4217', '__init__.py')
@@ -105,46 +97,6 @@ def get_version():
     return version
 
 
-def readme():
-    try:
-        f = open('README.rst')
-    except IOError:
-        return
-    try:
-        return f.read()
-    finally:
-        f.close()
-
-
 setup(
-    name='iso4217',
-    description='ISO 4217 currency data package for Python',
-    long_description=readme(),
-    version=get_version(),
-    url='https://github.com/dahlia/iso4217',
-    author='Hong Minhee',
-    author_email='\x68\x6f\x6e\x67.minhee' '@' '\x67\x6d\x61\x69\x6c.com',
-    license='Public Domain',
-    packages=['iso4217'],
-    package_data={'iso4217': ['table.xml']},
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
-    install_requires=get_install_requires(),
-    keywords='internationalization i18n currency iso4217',
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Intended Audience :: Developers',
-        'License :: Public Domain',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
-        'Programming Language :: Python :: Implementation :: Stackless',
-        'Topic :: Office/Business :: Financial',
-        'Topic :: Software Development :: Internationalization',
-    ]
+    version=get_version()
 )
