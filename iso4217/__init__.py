@@ -28,7 +28,7 @@ def parse_published(pblshd):
 
 raw_xml = etree.fromstring(resource_string(__name__, 'table.xml'))
 __published__ = parse_published(raw_xml.attrib['Pblshd'])
-__version_prefix__ = (1, 6)
+__version_prefix__ = (1, 7)
 __version_info__ = (__version_prefix__ +
                     (int(__published__.strftime('%Y%m%d')),))
 __version__ = '.'.join(map(str, __version_info__))
