@@ -3,12 +3,12 @@
 
 .. image:: https://badge.fury.io/py/iso4217.svg?
    :target: https://pypi.python.org/pypi/iso4217
-.. image:: https://travis-ci.org/dahlia/iso4217.svg?branch=main
-   :target: https://travis-ci.org/dahlia/iso4217
+.. image:: https://github.com/dahlia/iso4217/actions/workflows/main.yaml/badge.svg
+   :target: https://github.com/dahlia/iso4217/actions/workflows/main.yaml
 
 This Python package contains `ISO 4217`_ currency data, represented as
-enum_ module which was introduced in 3.4.  Note that this works on Python 2.5
-as well as 3.7, the latest version of Python, through enum34_ package.
+enum_ module which was introduced in 3.4.  Note that this works on Python 2.7
+as well as 3.8, the latest version of Python, through enum34_ package.
 
 >>> from iso4217 import Currency
 >>> Currency.usd
@@ -36,4 +36,4 @@ Written by `Hong Minhee`_.  Distributed under Public Domain.
 .. _ISO 4217: http://www.iso.org/iso/home/standards/currency_codes.htm
 .. _enum: https://docs.python.org/3/library/enum.html
 .. _enum34: https://pypi.python.org/pypi/enum34
-.. _Hong Minhee: http://hongminhee.org/
+.. _Hong Minhee: https://hongminhee.org/

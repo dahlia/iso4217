@@ -1,0 +1,54 @@
+name: main
+on: [push, pull_request]
+
+jobs:
+  main:
+    strategy:
+      matrix:
+        runtime:
+        - python-version: 3.8.12
+          os: ubuntu-20.04
+        - python-version: 3.7.12
+          os: ubuntu-20.04
+        - python-version: 3.6.15
+          os: ubuntu-20.04
+        - python-version: 3.4.10
+          os: ubuntu-18.04
+        - python-version: 2.7.18
+          os: ubuntu-20.04
+        - python-version: pypy-3.8
+          os: ubuntu-latest
+        - python-version: pypy-2.7
+          os: ubuntu-latest
+      fail-fast: false
+    runs-on: ${{ matrix.runtime.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.runtime.python-version }}
+    - run: pip install wheel flake8
+    - run: python setup.py bdist_wheel
+    - run: pip install dist/iso4217-*.whl
+    - run: |
+        set -e
+        pushd /tmp
+        python -m iso4217.test
+        popd
+        flake8 .
+
+  fakeinv:
+    if: "github.event_name == 'push'"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: pip3 install wheel sphinx-fakeinv
+    - run: python3 setup.py bdist_wheel
+    - run: pip3 install dist/iso4217-*.whl
+    - run: mkdir -p /tmp/fakeinv/
+    - run: sphinx-fakeinv iso4217 > /tmp/fakeinv/objects.inv
+    - run: touch /tmp/fakeinv/.nojekyll
+    - uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: /tmp/fakeinv
