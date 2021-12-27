@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: pip3 install flake8 wheel
-    - run: python3 setup.py bdist_wheel
+    - run: python3 setup.py sdist bdist_wheel
     - run: flake8 .
     - uses: actions/upload-artifact@v2
       with:
@@ -52,6 +52,7 @@ jobs:
 
   fakeinv:
     if: "github.event_name == 'push'"
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2

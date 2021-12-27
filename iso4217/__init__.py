@@ -6,11 +6,14 @@ import datetime
 import enum
 import locale
 try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
+try:
     from xml.etree import cElementTree as etree
 except ImportError:
     from xml.etree import ElementTree as etree
 
-from pkg_resources import resource_string
 
 __all__ = ('Currency', '__published__', '__version__', '__version_info__',
            'raw_table', 'raw_xml')
@@ -26,7 +29,7 @@ def parse_published(pblshd):
     return published
 
 
-raw_xml = etree.fromstring(resource_string(__name__, 'table.xml'))
+raw_xml = etree.fromstring(files(__name__).joinpath('table.xml').read_bytes())
 __published__ = parse_published(raw_xml.attrib['Pblshd'])
 __version_prefix__ = (1, 7)
 __version_info__ = (__version_prefix__ +
