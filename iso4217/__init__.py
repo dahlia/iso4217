@@ -22,7 +22,8 @@ __all__ = ('Currency', '__published__', '__version__', '__version_info__',
 def parse_published(pblshd):
     if '-' in pblshd and ',' not in pblshd:
         return datetime.date(*map(int, raw_xml.attrib['Pblshd'].split('-')))
-    lc_time, _ = locale.getlocale(locale.LC_TIME)
+    lc, enc = locale.getlocale(locale.LC_TIME)
+    lc_time = "{0}.{1}".format(lc, enc) if enc else lc
     locale.setlocale(locale.LC_TIME, 'C')
     published = datetime.datetime.strptime(pblshd, "%B %d, %Y").date()
     locale.setlocale(locale.LC_TIME, lc_time)
