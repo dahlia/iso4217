@@ -92,7 +92,8 @@ def update_enum_dict(locals_, raw_table):
     for code, _ccy_ntry in raw_table.items():
         if _ccy_ntry['CcyNbr'] is None:
             continue
-        if not _ccy_ntry.get('CcyMnrUnts', '').isdigit():
+        minor_units = _ccy_ntry.get('CcyMnrUnts', '')
+        if not minor_units.isdigit() and minor_units != 'N.A.':
             continue
         lcode = code.lower()
         if lcode in ('mro',):
@@ -145,5 +146,12 @@ class Currency(enum.Enum):
         There are also currencies that have no minor ucrrency unit.
         These are represented as 0.
 
+        Minor currency unit cannot be applicable for some `X currencies`__.
+        These include, for instance, precious metal gold ``XAU`` or ``XTS``
+        which is for testing purpose.
+
+        __ https://en.wikipedia.org/wiki/ISO_4217#X_currencies
+
         """
-        return int(raw_table[self.value]['CcyMnrUnts'])
+        minor_units = raw_table[self.value]['CcyMnrUnts']
+        return None if minor_units == 'N.A.' else int(minor_units)

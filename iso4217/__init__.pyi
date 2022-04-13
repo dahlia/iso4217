@@ -1,6 +1,6 @@
 import datetime
 import enum
-from typing import AbstractSet, Mapping, Tuple, Union
+from typing import AbstractSet, Mapping, Optional, Tuple, Union
 from xml.etree import ElementTree as etree
 
 
@@ -13,7 +13,6 @@ raw_table: Mapping[str, Mapping[str, Union[AbstractStr[str], str, int]]] = ...
 
 
 class Currency(enum.Enum):
-
 
     @property
     def code(self) -> str: ...
@@ -29,4 +28,4 @@ class Currency(enum.Enum):
         return frozenset(raw_table[self.value]['CtryNm'])
 
     @property
-    def exponent(self) -> int: ...
+    def exponent(self) -> Optional[int]: ...
