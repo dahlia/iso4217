@@ -16,7 +16,7 @@ import warnings
 from setuptools import setup
 
 
-table_url = 'http://www.currency-iso.org/dam/downloads/lists/list_one.xml'
+table_url = 'https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml'  # noqa: E501
 
 
 # Override if ISO4217_DOWNLOAD_URL is set
