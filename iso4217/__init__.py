@@ -100,6 +100,7 @@ def update_enum_dict(locals_, raw_table):
             lcode += '_'
         enumerants[lcode] = code
     for code, enumerant in enumerants.items():
+        locals_[enumerant] = enumerant
         locals_[code] = enumerant
 
 

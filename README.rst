@@ -10,24 +10,25 @@ This Python package contains `ISO 4217`_ currency data, represented as
 enum_ module which was introduced in 3.4.
 
 >>> from iso4217 import Currency
->>> Currency.usd
-<Currency.usd: 'USD'>
->>> Currency.usd.code
+>>> Currency.USD
+<Currency.USD: 'USD'>
+>>> Currency.USD.code
 'USD'
->>> Currency.usd.currency_name
+>>> Currency.USD.currency_name
 'US Dollar'
->>> Currency.usd.exponent  # USD has cents
+>>> Currency.USD.exponent  # USD has cents
 2
->>> Currency.jpy
-<Currency.jpy: 'JPY'>
->>> Currency.jpy.currency_name
+>>> Currency.JPY
+<Currency.JPY: 'JPY'>
+>>> Currency.JPY.currency_name
 'Yen'
->>> Currency.jpy.exponent  # JPY has no minor units
+>>> Currency.JPY.exponent  # JPY has no minor units
 0
 >>> Currency('KRW')  # Get by the code string
-<Currency.krw: 'KRW'>
->>> Currency.krw is Currency('KRW')
+<Currency.KRW: 'KRW'>
+>>> Currency.KRW is Currency('KRW')
 True
+>>> Currency.krw is Currency.KRW  # Lower enumerants are also available
 
 Written by `Hong Minhee`_.  Distributed under Public Domain.
 
