@@ -7,8 +7,7 @@
    :target: https://github.com/dahlia/iso4217/actions/workflows/main.yaml
 
 This Python package contains `ISO 4217`_ currency data, represented as
-enum_ module which was introduced in 3.4.  Note that this works on Python 2.7
-as well as 3.10, the latest version of Python, through enum34_ package.
+enum_ module which was introduced in 3.4.
 
 >>> from iso4217 import Currency
 >>> Currency.usd
