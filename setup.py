@@ -2,6 +2,7 @@ import ast
 import locale
 import os
 import os.path
+import sys
 import time
 try:
     import urllib2
@@ -65,7 +66,10 @@ def get_version():
             continue
         target, = node.targets
         if isinstance(target, ast.Name) and target.id == '__version_prefix__':
-            version = '.'.join(str(e.n) for e in node.value.elts)
+            version = '.'.join(
+                str(e.value if sys.version_info >= (3, 8) else e.n)
+                for e in node.value.elts
+            )
             break
     else:
         raise ValueError('could not find __version_prefix__')
