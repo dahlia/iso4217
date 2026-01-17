@@ -1,6 +1,15 @@
 import datetime
 import enum
-from typing import AbstractSet, Mapping, Optional, Tuple, Union
+from typing import (
+    AbstractSet,
+    Any,
+    Callable,
+    Generator,
+    Mapping,
+    Optional,
+    Tuple,
+    Union,
+)
 from xml.etree import ElementTree as etree
 
 
@@ -13,6 +22,19 @@ raw_table: Mapping[str, Mapping[str, Union[AbstractSet[str], str, int]]] = ...
 
 
 class Currency(enum.Enum):
+
+    @classmethod
+    def _validate(cls, value: Any) -> "Currency": ...
+
+    # Pydantic v1 support
+    @classmethod
+    def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]: ...
+
+    # Pydantic v2 support
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: Any
+    ) -> Any: ...
 
     @property
     def code(self) -> str: ...
