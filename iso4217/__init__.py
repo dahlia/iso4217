@@ -137,8 +137,16 @@ class Currency(enum.Enum):
     def __get_pydantic_core_schema__(cls, source_type, handler):
         """Return Pydantic v2 core schema for validation and serialization."""
         from pydantic_core import core_schema
-        return core_schema.no_info_plain_validator_function(
+        python_schema = core_schema.union_schema([
+            core_schema.is_instance_schema(cls),
+            core_schema.str_schema(),
+        ])
+        return core_schema.no_info_after_validator_function(
             cls._validate,
+            core_schema.json_or_python_schema(
+                json_schema=core_schema.str_schema(),
+                python_schema=python_schema,
+            ),
             serialization=core_schema.plain_serializer_function_ser_schema(
                 lambda x: x.value,
                 info_arg=False,

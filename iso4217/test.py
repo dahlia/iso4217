@@ -63,6 +63,13 @@ def test_pydantic():
     t3 = Transaction(amount=75.0, currency='jpy')
     assert t3.currency is Currency.JPY
 
+    # Regression test for GitHub issue #29:
+    # model_json_schema() must be generatable for models using Currency.
+    schema = Transaction.model_json_schema()
+    assert schema['type'] == 'object'
+    assert schema['properties']['currency']['type'] == 'string'
+    assert 'currency' in schema['required']
+
     print("Pydantic tests passed!")
 
 
